@@ -367,7 +367,7 @@
         <h1>Email Dashboard</h1>
         <div class="header-right">
             <div class="header-meta">
-                <span>Last updated: <strong>Jun 18, 2026 7:30 PM</strong></span>
+                <span>Last updated: <strong>Jun 23, 2026 5:00 PM PDT</strong></span>
             </div>
             <div style="display:flex;align-items:center;gap:0.5rem;">
                 <button class="refresh-btn" id="refresh-btn" onclick="requestRefresh()">
@@ -384,149 +384,204 @@
             <span class="section-title">
                 <span class="icon">&#9888;&#65039;</span>
                 Important &amp; New
-                <span class="badge urgent">10</span>
+                <span class="badge urgent">13</span>
             </span>
             <span class="chevron">&#9660;</span>
         </div>
         <div class="section-body">
 
+            <!-- 1. Homeschool call confirmed for TODAY -->
             <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ed7bc34a79b0b0" onchange="handleDoneCheck(this)">
+                <input type="checkbox" class="done-check" data-thread-id="19ef18c4d0360fde" onchange="handleDoneCheck(this)">
                 <div class="urgency-dot urgent"></div>
                 <div class="email-content">
                     <div class="email-top">
-                        <span class="email-sender">Management Trust</span>
-                        <span class="email-date">Jun 17 <button class="trash-btn" onclick="trashSingleEmail(this, '19ed7bc34a79b0b0')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-sender">Stephanie Hood (Peach Blossom School)</span>
+                        <span class="email-date">Jun 23<button class="trash-btn" onclick="trashSingleEmail(this, '19ef18c4d0360fde')" title="Move to trash">&#128465;</button></span>
                     </div>
-                    <div class="email-subject">New Web Portal Login Credentials - Madsen Ranch HOA</div>
-                    <div class="email-summary">New owner portal account login credentials for Ido &amp; Mirit Josef. Save these for HOA access.</div>
-                    <span class="email-action-tag review">SAVE CREDENTIALS</span>
+                    <div class="email-subject">Re: Support for Home School</div>
+                    <div class="email-summary">Confirmed: Call at 2pm TODAY. Phone: 408-460-8462. She is available to discuss homeschooling for Ella and Emmie.</div>
+                    <span class="email-action-tag deadline">CALL TODAY 2PM</span>
                 </div>
             </div>
 
+            <!-- 2. Sutter Health test result -->
             <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ed76734adc43ab" onchange="handleDoneCheck(this)">
+                <input type="checkbox" class="done-check" data-thread-id="19ef0f86f0f5441f" onchange="handleDoneCheck(this)">
                 <div class="urgency-dot urgent"></div>
                 <div class="email-content">
                     <div class="email-top">
-                        <span class="email-sender">United Wholesale Mortgage</span>
-                        <span class="email-date">Jun 17 <button class="trash-btn" onclick="trashSingleEmail(this, '19ed76734adc43ab')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-sender">Sutter Health (My Health Online)</span>
+                        <span class="email-date">Jun 22<button class="trash-btn" onclick="trashSingleEmail(this, '19ef0f86f0f5441f')" title="Move to trash">&#128465;</button></span>
                     </div>
-                    <div class="email-subject">Notification In The Document Center</div>
-                    <div class="email-summary">New mortgage document available for account ending 8729. Log in to review.</div>
-                    <span class="email-action-tag review">REVIEW DOCUMENT</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19edb77f7107e437" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot urgent"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">Goosehead Insurance</span>
-                        <span class="email-date">Jun 18 <button class="trash-btn" onclick="trashSingleEmail(this, '19edb77f7107e437')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">Renewal time is here. Check out your policy details.</div>
-                    <div class="email-summary">Policy SP3-TX-23658896 renewal is set. Review details to confirm everything is correct.</div>
-                    <span class="email-action-tag review">REVIEW RENEWAL</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19eda437ae4d8702" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot action"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">Chase</span>
-                        <span class="email-date">Jun 18 <button class="trash-btn" onclick="trashSingleEmail(this, '19eda437ae4d8702')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">Your credit card statement is available</div>
-                    <div class="email-summary">Statement for card ending 5606. Balance: $770.78, due Jul 14. Auto-pay enabled, min $40.</div>
-                    <span class="email-action-tag review">REVIEW STATEMENT</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ecedc5e0655712" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot urgent"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">Maya / Oded (BAJC)</span>
-                        <span class="email-date">Jun 16-17 <button class="trash-btn" onclick="trashSingleEmail(this, '19ecedc5e0655712')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">Amended BOE questionnaire</div>
-                    <div class="email-summary">Maya revised the BOE election questionnaire. Oded asked Tal to merge it. Thread includes you - may need input.</div>
+                    <div class="email-subject">You have a new message about a test result</div>
+                    <div class="email-summary">New test result available in MHO. Log in to view results.</div>
                     <span class="email-action-tag review">REVIEW</span>
                 </div>
             </div>
 
+            <!-- 3. Hyundai Safety Recall -->
             <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ebd96313b4357b" onchange="handleDoneCheck(this)">
+                <input type="checkbox" class="done-check" data-thread-id="19ef50f9a87c40ff" onchange="handleDoneCheck(this)">
                 <div class="urgency-dot urgent"></div>
                 <div class="email-content">
                     <div class="email-top">
-                        <span class="email-sender">CVS Specialty</span>
-                        <span class="email-date">Jun 12 <button class="trash-btn" onclick="trashSingleEmail(this, '19ebd96313b4357b')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-sender">Stevens Creek Hyundai</span>
+                        <span class="email-date">Jun 23<button class="trash-btn" onclick="trashSingleEmail(this, '19ef50f9a87c40ff')" title="Move to trash">&#128465;</button></span>
                     </div>
-                    <div class="email-subject">Ella, refill your prescription before you run out</div>
-                    <div class="email-summary">Ella's prescription refill reminder. Time-sensitive - refill before running out.</div>
-                    <span class="email-action-tag deadline">REFILL NEEDED</span>
+                    <div class="email-subject">Important Safety Recall Regarding Your Vehicle</div>
+                    <div class="email-summary">Your Hyundai Palisade may have an open recall. Schedule a recall repair. Code: TZBUKQ.</div>
+                    <span class="email-action-tag deadline">SCHEDULE REPAIR</span>
                 </div>
             </div>
 
+            <!-- 4. Aetna EOB -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ef2234b080e339" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Aetna</span>
+                        <span class="email-date">Jun 23<button class="trash-btn" onclick="trashSingleEmail(this, '19ef2234b080e339')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">IT'S HERE: Your Explanation of Benefits</div>
+                    <div class="email-summary">New EOB available. Review for any charges or coverage details.</div>
+                    <span class="email-action-tag review">REVIEW</span>
+                </div>
+            </div>
+
+            <!-- 5. FBAR Accepted -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ee7348027ce21a" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot info"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">FinCEN (BSA E-Filing)</span>
+                        <span class="email-date">Jun 20<button class="trash-btn" onclick="trashSingleEmail(this, '19ee7348027ce21a')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">FBAR Submission Accepted FX26-00656945</div>
+                    <div class="email-summary">Mirit Josef 2025 FBAR accepted by FinCEN. Filing complete.</div>
+                    <span class="email-action-tag fyi">FYI - COMPLETE</span>
+                </div>
+            </div>
+
+            <!-- 6. FBAR Acknowledged -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19eef2baaa72a882" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot info"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">FinCEN (BSA E-Filing)</span>
+                        <span class="email-date">Jun 22<button class="trash-btn" onclick="trashSingleEmail(this, '19eef2baaa72a882')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">FinCEN Acknowledgement FX26-00656945</div>
+                    <div class="email-summary">FBAR submission acknowledged for Mirit Josef 2025. BSA ID assigned.</div>
+                    <span class="email-action-tag fyi">FYI - COMPLETE</span>
+                </div>
+            </div>
+
+            <!-- 7. Ethos Life Insurance -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ef55b545a1ac9b" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Ethos Life</span>
+                        <span class="email-date">Jun 23<button class="trash-btn" onclick="trashSingleEmail(this, '19ef55b545a1ac9b')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">Ido, you can still customize your life insurance coverage</div>
+                    <div class="email-summary">You can adjust your coverage for a different rate. Explore options.</div>
+                    <span class="email-action-tag review">REVIEW</span>
+                </div>
+            </div>
+
+            <!-- 8. HOA Portal Credentials -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ed7bc34a79b0b0" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Management Trust (Madsen Ranch HOA)</span>
+                        <span class="email-date">Jun 17<button class="trash-btn" onclick="trashSingleEmail(this, '19ed7bc34a79b0b0')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">New Web Portal Login Credentials - Madsen Ranch HOA</div>
+                    <div class="email-summary">New owner portal account created. Login instructions included. Save credentials.</div>
+                    <span class="email-action-tag review">SAVE CREDENTIALS</span>
+                </div>
+            </div>
+
+            <!-- 9. UWM Mortgage Document -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ed76734adc43ab" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">United Wholesale Mortgage</span>
+                        <span class="email-date">Jun 17<button class="trash-btn" onclick="trashSingleEmail(this, '19ed76734adc43ab')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">Notification In The Document Center (Acct ending 8729)</div>
+                    <div class="email-summary">New mortgage document available. Visit uwm.loanadministration.com to view.</div>
+                    <span class="email-action-tag review">REVIEW</span>
+                </div>
+            </div>
+
+            <!-- 10. BAJC BOE Questionnaire -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ecedc5e0655712" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Maya (EdvocacyNow) / Oded / Tal</span>
+                        <span class="email-date">Jun 16-17<button class="trash-btn" onclick="trashSingleEmail(this, '19ecedc5e0655712')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">Amended BOE questionnaire</div>
+                    <div class="email-summary">Maya amended the BAJC election questionnaire. Tal will merge with Google Doc next week. Review the changes.</div>
+                    <span class="email-action-tag review">REVIEW</span>
+                </div>
+            </div>
+
+            <!-- 11. Obie Insurance Payment -->
             <div class="email-item">
                 <input type="checkbox" class="done-check" data-thread-id="19ebf93c280d1997" onchange="handleDoneCheck(this)">
                 <div class="urgency-dot action"></div>
                 <div class="email-content">
                     <div class="email-top">
                         <span class="email-sender">Obie Insurance</span>
-                        <span class="email-date">Jun 13 <button class="trash-btn" onclick="trashSingleEmail(this, '19ebf93c280d1997')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-date">Jun 13<button class="trash-btn" onclick="trashSingleEmail(this, '19ebf93c280d1997')" title="Move to trash">&#128465;</button></span>
                     </div>
-                    <div class="email-subject">Upcoming Payment for Your Policy CSS103628-01</div>
-                    <div class="email-summary">Upcoming insurance payment due. Verify payment method is current.</div>
+                    <div class="email-subject">Upcoming Payment for Policy CSS103628-01</div>
+                    <div class="email-summary">Upcoming payment for your insurance policy. Verify amount and payment method.</div>
                     <span class="email-action-tag deadline">PAYMENT DUE</span>
                 </div>
             </div>
 
+            <!-- 12. CVS Ella Prescription Refill -->
             <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ed6249aa0c8f74" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot action"></div>
+                <input type="checkbox" class="done-check" data-thread-id="19ebd96313b4357b" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot urgent"></div>
                 <div class="email-content">
                     <div class="email-top">
-                        <span class="email-sender">Bank of America</span>
-                        <span class="email-date">Jun 17 <button class="trash-btn" onclick="trashSingleEmail(this, '19ed6249aa0c8f74')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-sender">CVS Specialty</span>
+                        <span class="email-date">Jun 12<button class="trash-btn" onclick="trashSingleEmail(this, '19ebd96313b4357b')" title="Move to trash">&#128465;</button></span>
                     </div>
-                    <div class="email-subject">Important account information ready to view</div>
-                    <div class="email-summary">Important document for account ending 7946 available in Statements and Documents.</div>
-                    <span class="email-action-tag review">REVIEW DOCUMENT</span>
+                    <div class="email-subject">Ella, refill your prescription before you run out</div>
+                    <div class="email-summary">Ella's prescription needs to be refilled. Don't let it run out.</div>
+                    <span class="email-action-tag deadline">REFILL NEEDED</span>
                 </div>
             </div>
 
+            <!-- 13. GoFundMe Donation -->
             <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19edae99a2cd57fc" onchange="handleDoneCheck(this)">
+                <input type="checkbox" class="done-check" data-thread-id="19ec2d10f82bb835" onchange="handleDoneCheck(this)">
                 <div class="urgency-dot info"></div>
                 <div class="email-content">
                     <div class="email-top">
-                        <span class="email-sender">Chase</span>
-                        <span class="email-date">Jun 18 <button class="trash-btn" onclick="trashSingleEmail(this, '19edae99a2cd57fc')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-sender">GoFundMe (UCSF Benioff)</span>
+                        <span class="email-date">Jun 13<button class="trash-btn" onclick="trashSingleEmail(this, '19ec2d10f82bb835')" title="Move to trash">&#128465;</button></span>
                     </div>
-                    <div class="email-subject">We've received your Chase Sapphire Preferred Visa payment</div>
-                    <div class="email-summary">Payment received and applied to your Sapphire Preferred account.</div>
-                    <span class="email-action-tag fyi">CONFIRMATION</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19edc17cd354568b" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot info"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">GitHub</span>
-                        <span class="email-date">Jun 18 <button class="trash-btn" onclick="trashSingleEmail(this, '19edc17cd354568b')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">A fine-grained personal access token has been added to your account</div>
-                    <div class="email-summary">New fine-grained PAT (email-dashboard) was added to your GitHub account. Verify if expected.</div>
-                    <span class="email-action-tag fyi">SECURITY NOTICE</span>
+                    <div class="email-subject">Noe Voordeckers made a $50 donation to your page</div>
+                    <div class="email-summary">New $50 donation to your UCSF Benioff Children's Hospitals fundraiser. Consider sending a thank you.</div>
+                    <span class="email-action-tag respond">THANK DONOR</span>
                 </div>
             </div>
 
@@ -539,107 +594,99 @@
             <span class="section-title">
                 <span class="icon">&#128260;</span>
                 Follow-Up Needed
-                <span class="badge action">7</span>
+                <span class="badge action">6</span>
             </span>
             <span class="chevron">&#9660;</span>
         </div>
         <div class="section-body">
 
+            <!-- 1. Holiday Inn stay details -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19eea6d541e284a7" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Holiday Inn Express SF Union Square</span>
+                        <span class="email-date">Jun 21<button class="trash-btn" onclick="trashSingleEmail(this, '19eea6d541e284a7')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">Details for your upcoming stay</div>
+                    <div class="email-summary">Arrival info for your upcoming SF stay. Forwarded to Mirit. Review check-in details.</div>
+                    <span class="email-action-tag review">REVIEW BEFORE TRIP</span>
+                </div>
+            </div>
+
+            <!-- 2. Homeschool Fair -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19edc859a4b0b457" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Sharon Barkan</span>
+                        <span class="email-date">Jun 18<button class="trash-btn" onclick="trashSingleEmail(this, '19edc859a4b0b457')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">Fwd: [BAHAS] Free Homeschool Fair, 7/5 in Saratoga</div>
+                    <div class="email-summary">Free homeschool fair on July 5 in Saratoga. Relevant for homeschooling exploration.</div>
+                    <span class="email-action-tag deadline">EVENT JUL 5</span>
+                </div>
+            </div>
+
+            <!-- 3. SimplePractice superbills -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ee759824c69b4c" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">PlayCircle Therapy (SimplePractice)</span>
+                        <span class="email-date">Jun 20<button class="trash-btn" onclick="trashSingleEmail(this, '19ee759824c69b4c')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">Your superbill(s) for 5/1/26 to 5/31/26</div>
+                    <div class="email-summary">May superbills attached. Submit to insurance for reimbursement.</div>
+                    <span class="email-action-tag respond">SUBMIT TO INSURANCE</span>
+                </div>
+            </div>
+
+            <!-- 4. Xfinity data usage -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ee1e3dae07a3fc" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot action"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Xfinity</span>
+                        <span class="email-date">Jun 19<button class="trash-btn" onclick="trashSingleEmail(this, '19ee1e3dae07a3fc')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">You've used 75% of your monthly internet data</div>
+                    <div class="email-summary">75% of 1.2 TB used for June. Monitor usage to avoid overage charges.</div>
+                    <span class="email-action-tag review">MONITOR USAGE</span>
+                </div>
+            </div>
+
+            <!-- 5. Insurance claim check -->
             <div class="email-item">
                 <input type="checkbox" class="done-check" data-thread-id="19ed2c9594f32f4a" onchange="handleDoneCheck(this)">
                 <div class="urgency-dot action"></div>
                 <div class="email-content">
                     <div class="email-top">
                         <span class="email-sender">Insurance Claim Check</span>
-                        <span class="email-date">Jun 16 <button class="trash-btn" onclick="trashSingleEmail(this, '19ed2c9594f32f4a')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-date">Jun 16<button class="trash-btn" onclick="trashSingleEmail(this, '19ed2c9594f32f4a')" title="Move to trash">&#128465;</button></span>
                     </div>
                     <div class="email-subject">Check Received: See Your Claim Progress and Updates</div>
-                    <div class="email-summary">Insurance claim check received. Processing takes up to 8 business days. Monitor progress.</div>
-                    <span class="email-action-tag review">MONITOR</span>
+                    <div class="email-summary">Insurance claim check received. Processing can take up to 8 business days. Track progress.</div>
+                    <span class="email-action-tag review">TRACK PROGRESS</span>
                 </div>
             </div>
 
+            <!-- 6. LinkedIn DM from Risa -->
             <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ed2c73448324a1" onchange="handleDoneCheck(this)">
+                <input type="checkbox" class="done-check" data-thread-id="19ef01fa9cbe9044" onchange="handleDoneCheck(this)">
                 <div class="urgency-dot info"></div>
                 <div class="email-content">
                     <div class="email-top">
-                        <span class="email-sender">Mirit Josef</span>
-                        <span class="email-date">Jun 16 <button class="trash-btn" onclick="trashSingleEmail(this, '19ed2c73448324a1')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">Fwd: Transaction export complete (Rocket Money)</div>
-                    <div class="email-summary">Mirit forwarded Rocket Money transaction exports. Review the exported data.</div>
-                    <span class="email-action-tag review">REVIEW</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ed5ec9815d4584" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot action"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">Assemblymember Ahrens</span>
-                        <span class="email-date">Jun 17 <button class="trash-btn" onclick="trashSingleEmail(this, '19ed5ec9815d4584')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">REMINDER: RSVP for Community Town Hall</div>
-                    <div class="email-summary">Town Hall with Asm. Ahrens and Santa Clara Valley Water Director. RSVP if interested.</div>
-                    <span class="email-action-tag respond">RSVP</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ecbdbfa7495931" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot action"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">LinkedIn (Risa)</span>
-                        <span class="email-date">Jun 15 <button class="trash-btn" onclick="trashSingleEmail(this, '19ecbdbfa7495931')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-sender">LinkedIn - Risa (DM)</span>
+                        <span class="email-date">Jun 22<button class="trash-btn" onclick="trashSingleEmail(this, '19ef01fa9cbe9044')" title="Move to trash">&#128465;</button></span>
                     </div>
                     <div class="email-subject">Risa just messaged you</div>
-                    <div class="email-summary">New LinkedIn direct message from Risa awaiting your response.</div>
+                    <div class="email-summary">1 new LinkedIn direct message awaiting your response.</div>
                     <span class="email-action-tag respond">RESPOND</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19eaa9630a5d5b95" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot action"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">JDCBA Board (Adrienne)</span>
-                        <span class="email-date">Jun 9-15 <button class="trash-btn" onclick="trashSingleEmail(this, '19eaa9630a5d5b95')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">Board members, please complete the membership survey</div>
-                    <div class="email-summary">Reminder to complete the JDCBA membership survey. Quick and anonymous.</div>
-                    <span class="email-action-tag respond">COMPLETE SURVEY</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19e467be82d3e5ef" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot info"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">Intuit HR (ChiChi)</span>
-                        <span class="email-date">May 20 <button class="trash-btn" onclick="trashSingleEmail(this, '19e467be82d3e5ef')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">Intuit - Offboarding Support</div>
-                    <div class="email-summary">Severance details: paid after signing separation agreement (available Jul 31). 28 weeks. Keep for reference.</div>
-                    <span class="email-action-tag fyi">REFERENCE</span>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19eccb341e9bf32f" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot info"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">Paddle</span>
-                        <span class="email-date">Jun 15 <button class="trash-btn" onclick="trashSingleEmail(this, '19eccb341e9bf32f')" title="Move to trash">&#128465;</button></span>
-                    </div>
-                    <div class="email-subject">Your Subscription for ProjectionLab has been canceled</div>
-                    <div class="email-summary">ProjectionLab Premium canceled. Access continues until end of billing period.</div>
-                    <span class="email-action-tag fyi">CONFIRMATION</span>
                 </div>
             </div>
 
@@ -657,23 +704,24 @@
             <span class="chevron">&#9660;</span>
         </div>
         <div class="section-body">
-            <div class="subsection-label">Ella (4th Grade)</div>
+            <div class="subsection-label">Ella (entering 4th Grade)</div>
             <div class="empty-state">No Ella-specific updates this week.</div>
-            <div class="subsection-label">Emmie (1st Grade)</div>
+            <div class="subsection-label">Emmie (entering 1st Grade)</div>
             <div class="empty-state">No Emmie-specific updates this week.</div>
             <div class="subsection-label">General / District</div>
 
+            <!-- CUSD new mobile apps -->
             <div class="email-item">
-                <input type="checkbox" class="done-check" data-thread-id="19ebcb28174b684a" onchange="handleDoneCheck(this)">
-                <div class="urgency-dot action"></div>
+                <input type="checkbox" class="done-check" data-thread-id="19eeff882b798de2" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot info"></div>
                 <div class="email-content">
                     <div class="email-top">
-                        <span class="email-sender">ParentSquare / CUSD</span>
-                        <span class="email-date">Jun 12 <button class="trash-btn" onclick="trashSingleEmail(this, '19ebcb28174b684a')" title="Move to trash">&#128465;</button></span>
+                        <span class="email-sender">CUSD Technology Department (ParentSquare)</span>
+                        <span class="email-date">Jun 22<button class="trash-btn" onclick="trashSingleEmail(this, '19eeff882b798de2')" title="Move to trash">&#128465;</button></span>
                     </div>
-                    <div class="email-subject">2026-2027 CUSD School Placement Notification</div>
-                    <div class="email-summary">School placement for 2026-2027 at Stocklmeir Elementary. First day of school is Thursday. Review placement details.</div>
-                    <span class="email-action-tag review">REVIEW PLACEMENT</span>
+                    <div class="email-subject">New mobile apps available to download</div>
+                    <div class="email-summary">Synergy (student info system) is updating its mobile apps. Download the new versions.</div>
+                    <span class="email-action-tag review">DOWNLOAD APPS</span>
                 </div>
             </div>
 
@@ -692,63 +740,78 @@
         </div>
         <div class="section-body">
 
+            <!-- Slickdeals: Thermaltake PC Case -->
             <div class="email-item">
-                <div class="urgency-dot info"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">LinkedIn DM (Ridah Malik Ram)</span>
-                        <span class="email-date">Jun 18</span>
-                    </div>
-                    <div class="email-subject">Ido, I'm still waiting for your response</div>
-                    <div class="email-summary">Sales exec from Mid Market waiting for response to a previous LinkedIn message.</div>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <div class="urgency-dot info"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">AllTrails</span>
-                        <span class="email-date">Jun 18</span>
-                    </div>
-                    <div class="email-subject">On-trail directions are now live</div>
-                    <div class="email-summary">AllTrails launched on-trail navigation directions. Useful for hiking and outdoor trips.</div>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <div class="urgency-dot info"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">Ticketmaster</span>
-                        <span class="email-date">Jun 18</span>
-                    </div>
-                    <div class="email-subject">Bluey's Big Play Tickets On Sale Today!</div>
-                    <div class="email-summary">Bluey's Big Play tickets on sale starting today at 12PM. Could be fun for the kids.</div>
-                </div>
-            </div>
-
-            <div class="email-item">
-                <div class="urgency-dot info"></div>
-                <div class="email-content">
-                    <div class="email-top">
-                        <span class="email-sender">Waterworks Swim</span>
-                        <span class="email-date">Jun 17</span>
-                    </div>
-                    <div class="email-subject">World's Largest Swim Lesson - Jun 25th</div>
-                    <div class="email-summary">Free event next Thursday Jun 25 at 1PM. RSVP to participate in World's Largest Swim Lesson.</div>
-                </div>
-            </div>
-
-            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ef554b9b289763" onchange="handleDoneCheck(this)">
                 <div class="urgency-dot low"></div>
                 <div class="email-content">
                     <div class="email-top">
-                        <span class="email-sender">Yellowstone Lodges</span>
-                        <span class="email-date">Jun 18</span>
+                        <span class="email-sender">Slickdeals Alert</span>
+                        <span class="email-date">Jun 23<button class="trash-btn" onclick="trashSingleEmail(this, '19ef554b9b289763')" title="Move to trash">&#128465;</button></span>
                     </div>
-                    <div class="email-subject">Step Into Yellowstone's Past and Start Planning</div>
-                    <div class="email-summary">Yellowstone vacation planning info and seasonal experiences.</div>
+                    <div class="email-subject">[Prime] $89.99 | Thermaltake View 390 Air Mid Tower PC Case</div>
+                    <div class="email-summary">Matched your "Cooling tower" alert. Thermaltake PC case with 2 fans at Amazon.</div>
+                    <span class="email-action-tag fyi">DEAL ALERT</span>
+                </div>
+            </div>
+
+            <!-- Slickdeals: Bose SoundLink -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ef528ca6c689b8" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot low"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Slickdeals Alert</span>
+                        <span class="email-date">Jun 23<button class="trash-btn" onclick="trashSingleEmail(this, '19ef528ca6c689b8')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">$99 | Bose SoundLink Flex Bluetooth Speaker (2nd Gen)</div>
+                    <div class="email-summary">Matched your "Bose SoundLink" alert. Bluetooth speaker at Amazon.</div>
+                    <span class="email-action-tag fyi">DEAL ALERT</span>
+                </div>
+            </div>
+
+            <!-- REI Welcome + Coupon -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ee67731653d2ba" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot low"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">REI Co-op</span>
+                        <span class="email-date">Jun 20<button class="trash-btn" onclick="trashSingleEmail(this, '19ee67731653d2ba')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">You're In! Welcome to REI + special coupon</div>
+                    <div class="email-summary">REI membership welcome email with a special coupon inside.</div>
+                    <span class="email-action-tag fyi">COUPON</span>
+                </div>
+            </div>
+
+            <!-- LinkedIn: Matan connection request -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ef10e70a0c5ef9" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot low"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">LinkedIn - Matan (Connection Request)</span>
+                        <span class="email-date">Jun 22<button class="trash-btn" onclick="trashSingleEmail(this, '19ef10e70a0c5ef9')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">I want to connect - Matan, Principal PM Data from Intuit</div>
+                    <div class="email-summary">Former Intuit colleague Matan wants to connect on LinkedIn.</div>
+                    <span class="email-action-tag respond">ACCEPT/IGNORE</span>
+                </div>
+            </div>
+
+            <!-- REI $10 Bonus Card -->
+            <div class="email-item">
+                <input type="checkbox" class="done-check" data-thread-id="19ee7b3749dc80f0" onchange="handleDoneCheck(this)">
+                <div class="urgency-dot low"></div>
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">REI Co-op</span>
+                        <span class="email-date">Jun 21<button class="trash-btn" onclick="trashSingleEmail(this, '19ee7b3749dc80f0')" title="Move to trash">&#128465;</button></span>
+                    </div>
+                    <div class="email-subject">Congrats! You Earned a $10.00 Bonus Card</div>
+                    <div class="email-summary">$10 bonus card for one purchase, valid through 07/24/2026.</div>
+                    <span class="email-action-tag fyi">EXPIRES 7/24</span>
                 </div>
             </div>
 
@@ -761,7 +824,7 @@
             <span class="section-title">
                 <span class="icon">&#128465;&#65039;</span>
                 Suggested for Deletion
-                <span class="badge">50</span>
+                <span class="badge">52</span>
             </span>
             <span class="chevron">&#9660;</span>
         </div>
@@ -771,62 +834,401 @@
                 <button id="trash-btn-main" onclick="moveSelectedToTrash()">Move selected to trash</button>
             </div>
 
+            <div class="subsection-label">Peachjar Flyers</div>
+
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19eaead1042b2620">
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Peachjar</span>
+                        <span class="email-date">Jun 9</span>
+                    </div>
+                    <div class="email-subject">3 New School and Community Flyers for Your Child</div>
+                    <div class="email-summary">AI/Robotics camp, Champions CHAMP CAMP, LGBTQ+ Pride Flag Raising.</div>
+                </div>
+            </div>
+
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19e8aa48d6ba9f87">
+                <div class="email-content">
+                    <div class="email-top">
+                        <span class="email-sender">Peachjar</span>
+                        <span class="email-date">Jun 2</span>
+                    </div>
+                    <div class="email-subject">5 New School and Community Flyers for Your Child</div>
+                    <div class="email-summary">AI camp, CalFresh/WIC, Maestro Stars Academy, etc.</div>
+                </div>
+            </div>
+
             <div class="subsection-label">Old Promotions (60+ days)</div>
 
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d8ca8ce16cad86"><div class="email-content"><div class="email-top"><span class="email-sender">TurboTax</span><span class="email-date">Apr 14</span></div><div class="email-subject">Important Notice: Taxes due tomorrow</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d8c9b6b34aa493"><div class="email-content"><div class="email-top"><span class="email-sender">Thousand Trails</span><span class="email-date">Apr 14</span></div><div class="email-subject">Hurry - $250 OFF your Annual Camping Pass ending soon!</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d8c87604523208"><div class="email-content"><div class="email-top"><span class="email-sender">Holiday Inn Club</span><span class="email-date">Apr 14</span></div><div class="email-subject">Your package is paid for - Now pick your dates.</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d8c7c3ea2a2764"><div class="email-content"><div class="email-top"><span class="email-sender">Interval World</span><span class="email-date">Apr 14</span></div><div class="email-subject">Your Resort Accommodations Certificate Is Expiring Soon!</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d8c3a50ea5828c"><div class="email-content"><div class="email-top"><span class="email-sender">August</span><span class="email-date">Apr 14</span></div><div class="email-subject">Up to 30% in Mother's Day Savings.</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d894fe35ee9eaa"><div class="email-content"><div class="email-top"><span class="email-sender">TurboTax</span><span class="email-date">Apr 14</span></div><div class="email-subject">You're almost finished - file tonight</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d89036cc8b5f8f"><div class="email-content"><div class="email-top"><span class="email-sender">Rocket Money</span><span class="email-date">Apr 13</span></div><div class="email-subject">Quick budget check-in: Dining &amp; Drinks</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d88e595b1786dc"><div class="email-content"><div class="email-top"><span class="email-sender">Ticketmaster</span><span class="email-date">Apr 13</span></div><div class="email-subject">Lucas Zelnick Presale Starts Tomorrow</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d87d2aca9672a1"><div class="email-content"><div class="email-top"><span class="email-sender">JewBelong</span><span class="email-date">Apr 13</span></div><div class="email-subject">Light a virtual candle - Holocaust Remembrance Day</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d879edfae74011"><div class="email-content"><div class="email-top"><span class="email-sender">DoorDash</span><span class="email-date">Apr 13</span></div><div class="email-subject">Don't skip the reservation</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d876489489f3ec"><div class="email-content"><div class="email-top"><span class="email-sender">Thousand Trails</span><span class="email-date">Apr 13</span></div><div class="email-subject">Spring Into Camping Today!</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d850bcd3899162"><div class="email-content"><div class="email-top"><span class="email-sender">Slickdeals</span><span class="email-date">Apr 13</span></div><div class="email-subject">$109 | Bose SoundLink Flex Bluetooth Speaker (2nd Gen)</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d843ac7b9ec142"><div class="email-content"><div class="email-top"><span class="email-sender">Epic Pass</span><span class="email-date">Apr 13</span></div><div class="email-subject">Hours Left To Secure Your 10 Epic Friend Tickets</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d840ee396f8d62"><div class="email-content"><div class="email-top"><span class="email-sender">Greenlight</span><span class="email-date">Apr 12</span></div><div class="email-subject">Ido, get your $50 by 4/15</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d83de1e4cd96dd"><div class="email-content"><div class="email-top"><span class="email-sender">Costco</span><span class="email-date">Apr 12</span></div><div class="email-subject">Your Weekly Warehouse Insider</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d835b038084fed"><div class="email-content"><div class="email-top"><span class="email-sender">DoorDash</span><span class="email-date">Apr 12</span></div><div class="email-subject">Make today taste a little different</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d8349eb89b83e1"><div class="email-content"><div class="email-top"><span class="email-sender">StubHub</span><span class="email-date">Apr 12</span></div><div class="email-subject">Your event lineup: Miami Marlins at SF Giants</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d832d35a5a8008"><div class="email-content"><div class="email-top"><span class="email-sender">Adore Me</span><span class="email-date">Apr 12</span></div><div class="email-subject">Join Adore Me Premier: ONLY $12.95</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d82fda22ea8674"><div class="email-content"><div class="email-top"><span class="email-sender">DoorDash</span><span class="email-date">Apr 12</span></div><div class="email-subject">40% off your next two deliveries</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d82fc8ec198cb8"><div class="email-content"><div class="email-top"><span class="email-sender">Peacock</span><span class="email-date">Apr 12</span></div><div class="email-subject">Guardians vs. Braves TONIGHT</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d82b9dd29c5544"><div class="email-content"><div class="email-top"><span class="email-sender">Epic Pass</span><span class="email-date">Apr 12</span></div><div class="email-subject">Best Offer of the Year Ends Today</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d824ab9c6a8721"><div class="email-content"><div class="email-top"><span class="email-sender">TurboTax</span><span class="email-date">Apr 12</span></div><div class="email-subject">3 days left to file your taxes</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d823a02d887b3f"><div class="email-content"><div class="email-top"><span class="email-sender">Thousand Trails</span><span class="email-date">Apr 12</span></div><div class="email-subject">Camp more for less with an Annual Pass</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d81ecb7cc4a137"><div class="email-content"><div class="email-top"><span class="email-sender">Rocket Money</span><span class="email-date">Apr 12</span></div><div class="email-subject">This week's upcoming bills</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d7f6dddb8bd397"><div class="email-content"><div class="email-top"><span class="email-sender">Bandsintown</span><span class="email-date">Apr 12</span></div><div class="email-subject">Tomorrow: Preservation Hall Jazz Band</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d7d363cb7c7754"><div class="email-content"><div class="email-top"><span class="email-sender">TurboTax</span><span class="email-date">Apr 11</span></div><div class="email-subject">Last weekend to file your taxes</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d7d12a018962ad"><div class="email-content"><div class="email-top"><span class="email-sender">Kirkwood / Vail</span><span class="email-date">Apr 11</span></div><div class="email-subject">We got 11 inches of snow at Kirkwood!</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d7cb812019365a"><div class="email-content"><div class="email-top"><span class="email-sender">Exploratorium</span><span class="email-date">Apr 11</span></div><div class="email-subject">The Exploratorium misses you</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d7a4703a4617e3"><div class="email-content"><div class="email-top"><span class="email-sender">Bandsintown</span><span class="email-date">Apr 11</span></div><div class="email-subject">Tomorrow: Preservation Hall Jazz Band</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d7a3bea89682de"><div class="email-content"><div class="email-top"><span class="email-sender">Thousand Trails</span><span class="email-date">Apr 11</span></div><div class="email-subject">Stay Near This Summer's Biggest Soccer Matches</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d797812303631c"><div class="email-content"><div class="email-top"><span class="email-sender">Undercover Tourist</span><span class="email-date">Apr 10</span></div><div class="email-subject">2 Days for Price of 1 at Universal Hollywood</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d794cabbd40391"><div class="email-content"><div class="email-top"><span class="email-sender">Slickdeals</span><span class="email-date">Apr 10</span></div><div class="email-subject">$179.99 | Ninja Woodfire Pizza Oven</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d791d23b83856e"><div class="email-content"><div class="email-top"><span class="email-sender">Expedia</span><span class="email-date">Apr 10</span></div><div class="email-subject">Remember, you've got discounts</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d791216d2542e2"><div class="email-content"><div class="email-top"><span class="email-sender">Adore Me</span><span class="email-date">Apr 10</span></div><div class="email-subject">Bras Start at $11.99 | Spring Fling Sale</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d78b3495a58ea3"><div class="email-content"><div class="email-top"><span class="email-sender">Birdfy</span><span class="email-date">Apr 10</span></div><div class="email-subject">Best Buy Deal of the Day: Smart Bird Feeder</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d78853cf5138be"><div class="email-content"><div class="email-top"><span class="email-sender">AIPAC</span><span class="email-date">Apr 10</span></div><div class="email-subject">This is getting louder</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d7882e3237d876"><div class="email-content"><div class="email-top"><span class="email-sender">AIPAC</span><span class="email-date">Apr 10</span></div><div class="email-subject">This is getting louder (duplicate)</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d786c3233926f2"><div class="email-content"><div class="email-top"><span class="email-sender">Chase</span><span class="email-date">Apr 10</span></div><div class="email-subject">100,000 bonus points for mortgage</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d78664c74332f9"><div class="email-content"><div class="email-top"><span class="email-sender">Kirkwood / Vail</span><span class="email-date">Apr 10</span></div><div class="email-subject">Last chance for 10 Epic Friend Tickets</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d785e1bc4decc0"><div class="email-content"><div class="email-top"><span class="email-sender">AllTrails</span><span class="email-date">Apr 10</span></div><div class="email-subject">Join us for Earth Month, Ido!</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d78531daf051c4"><div class="email-content"><div class="email-top"><span class="email-sender">Manus</span><span class="email-date">Apr 10</span></div><div class="email-subject">Learn with Manus webinar</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d784cdf26f81b7"><div class="email-content"><div class="email-top"><span class="email-sender">Chase</span><span class="email-date">Apr 10</span></div><div class="email-subject">Get up to $120 annually in Instacart credits</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d784a909f570eb"><div class="email-content"><div class="email-top"><span class="email-sender">Chase</span><span class="email-date">Apr 10</span></div><div class="email-subject">Ido, 100,000 bonus points for mortgage</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d78282ac464f0d"><div class="email-content"><div class="email-top"><span class="email-sender">Holiday Inn Club</span><span class="email-date">Apr 10</span></div><div class="email-subject">Choose dates for your prepaid vacation</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d78166489cea40"><div class="email-content"><div class="email-top"><span class="email-sender">Undercover Tourist</span><span class="email-date">Apr 10</span></div><div class="email-subject">All Aboard for the Latest Disney World Updates</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d780678d9375ef"><div class="email-content"><div class="email-top"><span class="email-sender">Jewish Cal</span><span class="email-date">Apr 10</span></div><div class="email-subject">Registration Ends Tonight! Capitol Summit 2026</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d77eb97e88b56c"><div class="email-content"><div class="email-top"><span class="email-sender">Santa Cruz KOA</span><span class="email-date">Apr 10</span></div><div class="email-subject">Bring Your Group Together Outdoors</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d77b06241bea55"><div class="email-content"><div class="email-top"><span class="email-sender">Slickdeals</span><span class="email-date">Apr 10</span></div><div class="email-subject">$109 | Bose SoundLink Flex (2nd Gen)</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19d779ac33b5a4ae"><div class="email-content"><div class="email-top"><span class="email-sender">IHG</span><span class="email-date">Apr 10</span></div><div class="email-subject">Buy points and get more from your recent stays</div></div></div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dc043deea67378">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Undercover Tourist</span><span class="email-date">Apr 24</span></div>
+                    <div class="email-subject">The Happiest Summer Starts Here - Disneyland Plan for Kids</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dc02953f3263df">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Costco</span><span class="email-date">Apr 24</span></div>
+                    <div class="email-subject">The Modern Home: Defining your Space with Quality Upgrades</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dc0083f349a5a8">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Jovie Nannies</span><span class="email-date">Apr 24</span></div>
+                    <div class="email-subject">The Summer Every Kid on the Block Wishes They Had</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbc7cb03f8f76e">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Bandsintown</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Upcoming Live Shows: Teddy Swims, The Black Dahlia Murder...</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbc6dbac6fb400">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Adore Me</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">10% OFF on Every Order with Adore Me Premier</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbc582de480d6e">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Expedia</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">See your April One Key overview</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbc400fba1e4d6">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Sports Basement</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Here's 20% off everything in your cart</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbbdc0d18b1041">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">DoorDash</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Reminder: 40% off two deliveries</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbbcaedd637c79">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Costco Travel</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Sunny Adventures with Costco Travel</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbbba21389fe20">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Holiday Inn Club</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Almost gone: book dates to receive a bonus cruise</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbbb29270fa345">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Costco</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">The Future of Performance is Here (Tech)</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbb6a81fce67b6">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Live Nation</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">$30 Tickets - Get Early Access Today!</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbb1a55efc7e3d">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">VSP Vision</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Outdoor season is upon us. Shop new sunnies!</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19dbb13a99598b88">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Holiday Inn Club</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Ido, summer picks for the vacay you bought</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db95c8b2ce0364">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">TriNet</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Spoiler alert: recognition > raises. Free retention checklist.</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db926fdd3f75ca">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">TAU Alumni</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">Event invitation - May 10 (expired)</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db7d41de68788a">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Redfin</span><span class="email-date">Apr 23</span></div>
+                    <div class="email-subject">See your home on Redfin</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db6ad6cd29253f">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Chase</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Earn 75,000 bonus points with Chase Sapphire Preferred</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db6a1c2f15eb41">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Undercover Tourist</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Disneyland Ticket Offer: Save up to $368</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db615e96a6257a">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Thousand Trails</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Win a Camping Gear Package!</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db5c58d5a1d2bb">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Costco Auto</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Last chance for exclusive auto savings</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db58b9567ed463">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Thousand Trails</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Happy Earth Day! Celebrate The Great Outdoors</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db54829c896fce">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Bandsintown</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">GET YOUR TICKETS FOR THE UGLY TOUR (Teddy Swims)</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db4bb2056aa782">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Turkish Airlines</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Your Miles&amp;Smiles Account Summary (0 Miles)</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db49cdbe9e2916">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Pegasus Airlines</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Your exclusive 40% off Scandinavia!</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db2e4207cd68b7">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Expedia</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Book early to save 20% + get extra 12% on stays</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db29bd4cfa89f7">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Ticketmaster</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Bill Burr, John Mulaney & more near you!</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19db291e3647c4cb">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Thousand Trails</span><span class="email-date">Apr 22</span></div>
+                    <div class="email-subject">Get $300 OFF your Annual Camping Pass!</div>
+                </div>
+            </div>
 
             <div class="subsection-label">Old Social (60+ days)</div>
 
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19a4d2340c478067"><div class="email-content"><div class="email-top"><span class="email-sender">Instagram</span><span class="email-date">Nov 4</span></div><div class="email-subject">See your 3 new follow requests and more</div></div></div>
-            <div class="email-item"><input type="checkbox" class="delete-check" data-thread-id="19a37ab4fad01efc"><div class="email-content"><div class="email-top"><span class="email-sender">Nextdoor</span><span class="email-date">Oct 31</span></div><div class="email-subject">Good Samaritan Hospital Launches $1.3 Billion expansion</div></div></div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19a4ee2ede4cac2c">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn</span><span class="email-date">Nov 4, 2025</span></div>
+                    <div class="email-subject">Connection requests: Mark &amp; Alex (Intuit)</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19a4d2340c478067">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Instagram</span><span class="email-date">Nov 4, 2025</span></div>
+                    <div class="email-subject">See your 3 new follow requests on Instagram</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19a3fe28c492749e">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn</span><span class="email-date">Nov 1, 2025</span></div>
+                    <div class="email-subject">Start a conversation with Boaz</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19a37ab4fad01efc">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Nextdoor</span><span class="email-date">Oct 31, 2025</span></div>
+                    <div class="email-subject">Good Samaritan Hospital $1.3B expansion</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19a37726a1a6c54c">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Nextdoor</span><span class="email-date">Oct 30, 2025</span></div>
+                    <div class="email-subject">Dia de los Muertos 5k &amp; local events</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19a35fdd48114e8e">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Niv Bercovitch</span><span class="email-date">Oct 30, 2025</span></div>
+                    <div class="email-subject">Niv is still waiting for your response</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19a14b32dcefaf22">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Nextdoor</span><span class="email-date">Oct 24, 2025</span></div>
+                    <div class="email-subject">Tech or Treat at The Tech Interactive</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="199c9694221cbd5f">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Yan Gaitsgory</span><span class="email-date">Oct 9, 2025</span></div>
+                    <div class="email-subject">Yan is still waiting for your response</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="1993ae61ef3b5fab">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Instagram</span><span class="email-date">Sep 11, 2025</span></div>
+                    <div class="email-subject">You have unread messages from 3 people</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="1993a80584eb5814">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Asaf (Connection)</span><span class="email-date">Sep 11, 2025</span></div>
+                    <div class="email-subject">Asaf wants to connect</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19939372c711fa29">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Ronak Baldawa</span><span class="email-date">Sep 11, 2025</span></div>
+                    <div class="email-subject">Ronak is still waiting for your response</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="1993021febc30eb0">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Instagram</span><span class="email-date">Sep 9, 2025</span></div>
+                    <div class="email-subject">You have unread messages from 3 people</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="1992f7faf31f7a38">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn</span><span class="email-date">Sep 9, 2025</span></div>
+                    <div class="email-subject">Batchi just started a new job!</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="1992b0d34013746c">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Clayton (Connection)</span><span class="email-date">Sep 8, 2025</span></div>
+                    <div class="email-subject">Clayton, Financial Advisor wants to connect</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="1992a869c6b6b3bd">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Nextdoor</span><span class="email-date">Sep 8, 2025</span></div>
+                    <div class="email-subject">Woman arrested for hitting... (Highway 17)</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="199164dea5fc7014">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Nextdoor</span><span class="email-date">Sep 4, 2025</span></div>
+                    <div class="email-subject">Taste of Los Gatos event</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="199152ae7973f086">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Meltem Zando</span><span class="email-date">Sep 4, 2025</span></div>
+                    <div class="email-subject">Meltem is still waiting for your response</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="1991306cf7315f83">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Dominic (Connection)</span><span class="email-date">Sep 4, 2025</span></div>
+                    <div class="email-subject">Dominic from Intuit wants to connect</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="1990b1bc702782c6">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn</span><span class="email-date">Sep 2, 2025</span></div>
+                    <div class="email-subject">Giulia just started a new job!</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19909261ecf88601">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Ronak, Marianna, Shay</span><span class="email-date">Sep 2, 2025</span></div>
+                    <div class="email-subject">3 connection requests</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="19907166e212f964">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Nextdoor</span><span class="email-date">Sep 1, 2025</span></div>
+                    <div class="email-subject">SCC affordable homes Measure A update</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="198f41eb361d4409">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Eitan (Connection)</span><span class="email-date">Aug 29, 2025</span></div>
+                    <div class="email-subject">Eitan, Software Engineer Intern wants to connect</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="198f4030c125469b">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">LinkedIn - Eitan (DM)</span><span class="email-date">Aug 29, 2025</span></div>
+                    <div class="email-subject">Eitan just messaged you (Olympian, CS @ U of Michigan)</div>
+                </div>
+            </div>
+            <div class="email-item">
+                <input type="checkbox" class="delete-check" data-thread-id="198f2a123f616549">
+                <div class="email-content">
+                    <div class="email-top"><span class="email-sender">Nextdoor</span><span class="email-date">Aug 28, 2025</span></div>
+                    <div class="email-subject">Labor Day Weekend events</div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -888,20 +1290,42 @@
             let sha = null;
             const existing = await githubAPI(`contents/${path}`, 'GET');
             if (existing && existing.sha) sha = existing.sha;
+
             const body = {
                 message,
                 content: btoa(unescape(encodeURIComponent(content)))
             };
             if (sha) body.sha = sha;
+
             return githubAPI(`contents/${path}`, 'PUT', body);
+        }
+
+        async function deleteFileFromRepo(path, message) {
+            const existing = await githubAPI(`contents/${path}`, 'GET');
+            if (existing && existing.sha) {
+                return githubAPI(`contents/${path}`, 'DELETE', {
+                    message,
+                    sha: existing.sha
+                });
+            }
         }
 
         async function requestRefresh() {
             const btn = document.getElementById('refresh-btn');
             btn.disabled = true;
             btn.innerHTML = '&#8987; Requesting...';
-            const command = JSON.stringify({ action: 'refresh', requested_at: new Date().toISOString() });
-            const result = await writeFileToRepo('commands/refresh.json', command, 'Refresh requested from dashboard');
+
+            const command = JSON.stringify({
+                action: 'refresh',
+                requested_at: new Date().toISOString()
+            });
+
+            const result = await writeFileToRepo(
+                'commands/refresh.json',
+                command,
+                'Refresh requested from dashboard'
+            );
+
             if (result) {
                 btn.innerHTML = '&#9989; Refresh Queued';
                 showToast('Refresh requested! Dashboard will update within 15 minutes.');
@@ -910,7 +1334,11 @@
                 btn.innerHTML = '&#x21bb; Refresh';
                 btn.disabled = false;
             }
-            setTimeout(() => { btn.innerHTML = '&#x21bb; Refresh'; btn.disabled = false; }, 30000);
+
+            setTimeout(() => {
+                btn.innerHTML = '&#x21bb; Refresh';
+                btn.disabled = false;
+            }, 30000);
         }
 
         function getDoneState() {
@@ -976,17 +1404,27 @@
 
         async function moveSelectedToTrash() {
             const checked = document.querySelectorAll('#section-delete .delete-check:checked');
-            if (checked.length === 0) { showToast('No emails selected.'); return; }
+            if (checked.length === 0) {
+                showToast('No emails selected.');
+                return;
+            }
+
             const btn = document.getElementById('trash-btn-main');
             btn.disabled = true;
             btn.textContent = 'Processing...';
+
             const ids = Array.from(checked).map(cb => cb.dataset.threadId);
             const success = await queueDeletion(ids);
+
             if (success) {
-                checked.forEach(cb => { cb.closest('.email-item').classList.add('queued-delete'); });
+                checked.forEach(cb => {
+                    const item = cb.closest('.email-item');
+                    item.classList.add('queued-delete');
+                });
                 document.getElementById('select-all').checked = false;
-                showToast(`${ids.length} email(s) queued for deletion.`);
+                showToast(`${ids.length} email(s) queued for deletion. They'll be trashed within 15 minutes.`);
             }
+
             btn.disabled = false;
             btn.textContent = 'Move selected to trash';
         }
@@ -995,12 +1433,23 @@
             let pending = [];
             const existing = await githubAPI('contents/commands/delete.json', 'GET');
             if (existing && existing.content) {
-                try { pending = JSON.parse(decodeURIComponent(escape(atob(existing.content.replace(/\n/g, ''))))); }
-                catch(e) { pending = []; }
+                try {
+                    pending = JSON.parse(decodeURIComponent(escape(atob(existing.content.replace(/\n/g, '')))));
+                } catch(e) { pending = []; }
             }
+
             const allIds = [...new Set([...pending, ...threadIds])];
-            const result = await writeFileToRepo('commands/delete.json', JSON.stringify(allIds, null, 2), `Queue ${threadIds.length} email(s) for deletion`);
-            if (result) { showToast(`${threadIds.length} email(s) queued for deletion.`); return true; }
+
+            const result = await writeFileToRepo(
+                'commands/delete.json',
+                JSON.stringify(allIds, null, 2),
+                `Queue ${threadIds.length} email(s) for deletion`
+            );
+
+            if (result) {
+                showToast(`${threadIds.length} email(s) queued for deletion.`);
+                return true;
+            }
             return false;
         }
 
