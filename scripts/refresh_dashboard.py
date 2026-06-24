@@ -1,20 +1,16 @@
 #!/usr/bin/env python3
 """Gmail Dashboard Refresh Script.
-Fetches emails via Gmail API, categorizes with Anthropic Claude, generates HTML dashboard.
-Runs in GitHub Actions or locally."""
+Fetches emails via Gmail API, categorizes with rules, generates HTML dashboard.
+Runs in GitHub Actions or locally. No AI API needed."""
 
 import os
 import json
-import sys
-import html as html_module
-import base64
 import re
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-import anthropic
 
 # --- Config ---
 USER_ID = "me"
@@ -25,45 +21,45 @@ OUTPUT_PATH = os.path.join(REPO_DIR, "index.html")
 DELETE_PATH = os.path.join(REPO_DIR, "commands", "delete.json")
 REFRESH_PATH = os.path.join(REPO_DIR, "commands", "refresh.json")
 
-# Email queries
-QUERIES = {
-    "important": "is:unread in:inbox -category:promotions -category:social -category:forums newer_than:30d",
-    "important_flagged": "is:unread is:important newer_than:30d",
-    "followup": "is:read in:inbox -category:promotions -category:social -category:forums newer_than:14d",
-    "school": "(from:parentsquare OR from:cusdk8 OR from:stocklmeir OR subject:stocklmeir OR subject:CUSD OR subject:PTA) newer_than:7d",
-    "promos": "category:promotions newer_than:3d",
-    "social": "category:social newer_than:3d",
-    "delete_promos": "category:promotions older_than:60d",
-    "delete_social": "category:social older_than:60d",
-    "delete_peachjar": "from:peachjar newer_than:60d",
+# --- Categorization Rules ---
+
+# Senders/subjects that indicate school content
+SCHOOL_PATTERNS = {
+    "senders": ["parentsquare", "cusdk8", "cusd", "stocklmeir", "peachjar"],
+    "subjects": ["stocklmeir", "cusd", "pta", "school", "parent square"],
 }
 
-CATEGORIZATION_PROMPT = """You are categorizing emails for Ido's personal dashboard. Context about Ido:
-- Parent of Ella (9, entering 4th grade) and Emmie (6.5, entering 1st grade) at Stocklmeir Elementary, Cupertino Union School District (CUSD). School uses ParentSquare.
-- Interested in camping, RV gear, vacation deals. Tracks via Slickdeals and CamelCamelCamel.
-- Recently left Intuit. Active in BAJC (Bay Area Jewish community org).
+# Ella-specific keywords (name, grade, teacher)
+ELLA_KEYWORDS = ["ella", "4th grade", "fourth grade", "grade 4", "3rd grade", "third grade", "grade 3", "srivatsangam"]
 
-Categorize each email below. Return a JSON array where each item has:
-- "id": the thread_id
-- "cat": one of "important", "followup", "school_ella", "school_emmie", "school_general", "promo", "deletion", "skip"
-- "sum": one-line summary (what it is + what action needed, if any)
-- "urg": "urgent", "action", "info", or "low"
-- "tag": "PAY", "REVIEW", "RESPOND", "SIGN", "SAVE", "FYI", or null
+# Emmie-specific keywords
+EMMIE_KEYWORDS = ["emmie", "emmy", "1st grade", "first grade", "grade 1", "kindergarten", "kinder"]
 
-RULES:
-- important: UNREAD emails needing attention (bills, insurance, appointments, legal, financial, health, personal messages)
-- followup: READ emails where someone is waiting on Ido or he needs to act (pending responses, unsigned docs, unpaid bills)
-- school_ella: About Ella specifically (her teacher, her class, her grade)
-- school_emmie: About Emmie specifically
-- school_general: School-wide, district, PTA — NOT Peachjar flyers
-- promo: ONLY these types: camping/RV/outdoor gear deals, Slickdeals alerts, CamelCamelCamel alerts, specific tracked travel routes (like Google Flights price alerts), LinkedIn direct messages, LinkedIn connection requests
-- deletion: Peachjar flyer emails, generic hotel/travel promos (Expedia "save X%"), LinkedIn games/puzzles/newsletters/profile views, anything clearly not useful
-- skip: Newsletters, routine notifications, already-handled items — don't show on dashboard
+# Interesting promo senders/subjects
+PROMO_INTERESTING = {
+    "senders": ["slickdeals", "camelcamelcamel", "rei.com", "rei co-op", "campingworld",
+                "thousandtrails", "thousand trails", "jackery", "google flights",
+                "noreply-travel@google"],
+    "subjects": ["camping", "rv ", "outdoor", "campground", "hiking", "trail",
+                 "power station", "solar panel", "tent", "kayak", "yosemite",
+                 "national park", "slickdeals", "price drop", "price alert",
+                 "tracked route", "tracked price"],
+}
 
-Be selective for promos — only surface deals Ido would actually care about. When in doubt about school emails, use school_general.
+# LinkedIn - only DMs and connections
+LINKEDIN_GOOD = ["sent you a message", "connection request", "wants to connect",
+                 "accepted your invitation", "direct message", "new message"]
+LINKEDIN_BAD = ["puzzle", "game", "who viewed", "skill assessment", "newsletter",
+                "trending", "job alert", "is hiring", "endorsed", "anniversary",
+                "birthday", "reacted to", "commented on", "liked your"]
 
-EMAILS:
-"""
+# Always skip these senders for promos (generic/unwanted)
+PROMO_SKIP_SENDERS = ["expedia", "hotels.com", "booking.com", "trivago",
+                       "groupon", "wish.com", "temu", "shein"]
+
+# Peachjar - always route to deletion
+PEACHJAR_SUBJECTS = ["new school and community flyers", "new flyers", "new school flyer",
+                     "community flyers for your child"]
 
 
 def get_gmail_service():
@@ -80,7 +76,7 @@ def get_gmail_service():
 
 
 def search_threads(service, query, max_results=20):
-    """Search Gmail threads, return list of thread stubs."""
+    """Search Gmail threads."""
     try:
         results = (
             service.users()
@@ -118,7 +114,6 @@ def parse_sender(from_header):
     """Extract clean sender name from From header."""
     if not from_header:
         return "Unknown"
-    # "John Doe <john@example.com>" -> "John Doe"
     match = re.match(r'"?([^"<]+)"?\s*<', from_header)
     if match:
         return match.group(1).strip()
@@ -148,7 +143,7 @@ def extract_email_info(thread):
     if not messages:
         return None
 
-    msg = messages[-1]  # Latest message
+    msg = messages[-1]
     headers = {
         h["name"]: h["value"]
         for h in msg.get("payload", {}).get("headers", [])
@@ -159,13 +154,126 @@ def extract_email_info(thread):
         "thread_id": thread["id"],
         "subject": headers.get("Subject", "(no subject)"),
         "sender": parse_sender(headers.get("From", "")),
-        "sender_email": headers.get("From", ""),
+        "sender_email": headers.get("From", "").lower(),
         "date": parse_date(headers.get("Date", "")),
-        "date_raw": headers.get("Date", ""),
         "snippet": thread.get("snippet", ""),
         "is_unread": "UNREAD" in labels,
         "labels": labels,
     }
+
+
+def matches_any(text, patterns):
+    """Check if text contains any of the patterns (case-insensitive)."""
+    text_lower = text.lower()
+    return any(p.lower() in text_lower for p in patterns)
+
+
+def guess_action_tag(subject, snippet, sender_email):
+    """Guess an action tag based on keywords."""
+    text = (subject + " " + snippet).lower()
+    sender = sender_email.lower()
+
+    if any(w in text for w in ["pay invoice", "payment due", "pay your", "balance due", "amount due"]):
+        return "PAY"
+    if any(w in text for w in ["sign ", "signature", "e-sign", "docusign"]):
+        return "SIGN"
+    if any(w in text for w in ["save these", "credentials", "password", "pin ", "login"]):
+        return "SAVE"
+    if any(w in text for w in ["reply", "respond", "rsvp", "waiting for", "your input", "your feedback"]):
+        return "RESPOND"
+    if any(w in text for w in ["review", "statement", "renewal", "policy", "document", "report card"]):
+        return "REVIEW"
+    return "FYI"
+
+
+def guess_urgency(subject, snippet, sender_email):
+    """Guess urgency based on keywords."""
+    text = (subject + " " + snippet).lower()
+
+    if any(w in text for w in ["urgent", "action required", "failed", "expiring", "overdue",
+                                "recall", "immediately", "deadline today", "cancell"]):
+        return "urgent"
+    if any(w in text for w in ["action needed", "pay ", "sign ", "review", "appointment",
+                                "reminder", "due ", "renew", "refill", "prescription"]):
+        return "action"
+    return "info"
+
+
+# --- Categorization ---
+def categorize_email(email, source):
+    """Categorize a single email using rules. Returns (category, summary, urgency, tag)."""
+    subject = email["subject"]
+    snippet = email["snippet"]
+    sender = email["sender"]
+    sender_email = email["sender_email"]
+    subject_lower = subject.lower()
+    sender_lower = sender_email.lower()
+    text = (subject + " " + snippet).lower()
+
+    # --- Deletion candidates ---
+
+    # Old promos and social (from deletion queries)
+    if source in ("delete_promos", "delete_social"):
+        return "deletion", snippet[:80], "low", None
+
+    # Peachjar - always deletion
+    if "peachjar" in sender_lower or matches_any(subject_lower, PEACHJAR_SUBJECTS):
+        return "deletion", f"Peachjar flyer: {subject[:60]}", "low", None
+
+    # LinkedIn junk
+    if "linkedin" in sender_lower and matches_any(text, LINKEDIN_BAD):
+        return "deletion", snippet[:80], "low", None
+
+    # Generic travel promos
+    if matches_any(sender_lower, PROMO_SKIP_SENDERS):
+        return "deletion", snippet[:80], "low", None
+
+    # --- School ---
+    if source == "school" or matches_any(sender_lower, SCHOOL_PATTERNS["senders"]):
+        # Don't put peachjar in school (already caught above)
+        if "peachjar" in sender_lower:
+            return "deletion", f"Peachjar flyer: {subject[:60]}", "low", None
+
+        # Check for child-specific content
+        if matches_any(text, ELLA_KEYWORDS):
+            return "school_ella", snippet[:100], "info", None
+        elif matches_any(text, EMMIE_KEYWORDS):
+            return "school_emmie", snippet[:100], "info", None
+        else:
+            return "school_general", snippet[:100], "info", None
+
+    # --- Interesting promos ---
+    if source in ("promos", "social"):
+        # LinkedIn DMs and connections only
+        if "linkedin" in sender_lower:
+            if matches_any(text, LINKEDIN_GOOD):
+                return "promo", snippet[:100], "info", None
+            else:
+                return "skip", "", "low", None
+
+        # Check if it matches our interest patterns
+        if matches_any(sender_lower, PROMO_INTERESTING["senders"]) or \
+           matches_any(text, PROMO_INTERESTING["subjects"]):
+            return "promo", snippet[:100], "info", None
+
+        # Not interesting enough
+        return "skip", "", "low", None
+
+    # --- Important (unread) vs Follow-up (read) ---
+    if email["is_unread"]:
+        urgency = guess_urgency(subject, snippet, sender_email)
+        tag = guess_action_tag(subject, snippet, sender_email)
+        return "important", snippet[:100], urgency, tag
+    else:
+        # Read email - only include if it looks like it needs follow-up
+        if any(w in text for w in ["action", "reply", "respond", "waiting", "pending",
+                                    "due", "overdue", "pay", "sign", "review",
+                                    "appointment", "confirm", "rsvp", "your input",
+                                    "refill", "claim", "forwarded", "fwd:"]):
+            tag = guess_action_tag(subject, snippet, sender_email)
+            return "followup", snippet[:100], "action", tag
+        else:
+            return "skip", "", "low", None
 
 
 # --- Deletion Processing ---
@@ -202,9 +310,22 @@ def clear_refresh_marker():
 
 
 # --- Email Fetching ---
+QUERIES = {
+    "important": "is:unread in:inbox -category:promotions -category:social -category:forums newer_than:30d",
+    "important_flagged": "is:unread is:important newer_than:30d",
+    "followup": "is:read in:inbox -category:promotions -category:social -category:forums newer_than:14d",
+    "school": "(from:parentsquare OR from:cusdk8 OR from:stocklmeir OR subject:stocklmeir OR subject:CUSD OR subject:PTA) newer_than:7d",
+    "promos": "category:promotions newer_than:3d",
+    "social": "category:social newer_than:3d",
+    "delete_promos": "category:promotions older_than:60d",
+    "delete_social": "category:social older_than:60d",
+    "delete_peachjar": "from:peachjar newer_than:60d",
+}
+
+
 def fetch_all_emails(service):
     """Fetch emails from all query categories."""
-    all_emails = {}  # thread_id -> email_info + source
+    all_emails = {}  # thread_id -> (email_info, source)
 
     for source, query in QUERIES.items():
         print(f"  Searching: {source}")
@@ -219,106 +340,28 @@ def fetch_all_emails(service):
                 if detail:
                     info = extract_email_info(detail)
                     if info:
-                        info["sources"] = [source]
-                        all_emails[tid] = info
-            else:
-                all_emails[tid]["sources"].append(source)
+                        all_emails[tid] = (info, source)
+            # Keep first source (more specific queries run first)
 
     print(f"  Total unique threads: {len(all_emails)}")
     return all_emails
 
 
-# --- AI Categorization ---
-def auto_categorize(emails):
-    """Pre-categorize obvious emails without AI to save tokens."""
-    needs_ai = []
-    auto_results = []
-
-    for email in emails.values():
-        sources = email.get("sources", [])
-        sender_lower = email.get("sender_email", "").lower()
-        subject_lower = email.get("subject", "").lower()
-
-        # Auto-deletion: old promos, old social, peachjar
-        if "delete_promos" in sources or "delete_social" in sources:
-            auto_results.append({
-                "id": email["thread_id"],
-                "cat": "deletion",
-                "sum": email["snippet"][:80],
-                "urg": "low",
-                "tag": None,
-            })
-        elif "delete_peachjar" in sources or "peachjar" in sender_lower:
-            auto_results.append({
-                "id": email["thread_id"],
-                "cat": "deletion",
-                "sum": f"Peachjar flyer: {email['subject'][:60]}",
-                "urg": "low",
-                "tag": None,
-            })
-        else:
-            needs_ai.append(email)
-
-    return needs_ai, auto_results
-
-
-def categorize_with_claude(emails_needing_ai):
-    """Send emails to Claude for categorization."""
-    if not emails_needing_ai:
-        return []
-
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-
-    # Build email list for the prompt
-    email_lines = []
-    for e in emails_needing_ai:
-        status = "UNREAD" if e["is_unread"] else "READ"
-        sources = ", ".join(e["sources"])
-        email_lines.append(
-            f'- id: "{e["thread_id"]}" | status: {status} | sources: {sources} | '
-            f'from: {e["sender"]} <{e["sender_email"]}> | '
-            f'subject: {e["subject"]} | snippet: {e["snippet"][:120]}'
-        )
-
-    prompt = CATEGORIZATION_PROMPT + "\n".join(email_lines)
-
-    print(f"  Sending {len(emails_needing_ai)} emails to Claude for categorization...")
-    response = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=4096,
-        messages=[{"role": "user", "content": prompt}],
-    )
-
-    # Parse JSON from response
-    text = response.content[0].text
-    # Extract JSON array from response (handle markdown code blocks)
-    json_match = re.search(r"\[[\s\S]*\]", text)
-    if json_match:
-        try:
-            results = json.loads(json_match.group())
-            print(f"  Claude categorized {len(results)} emails")
-            return results
-        except json.JSONDecodeError as e:
-            print(f"  Warning: Failed to parse Claude response: {e}")
-            return []
-    else:
-        print("  Warning: No JSON array found in Claude response")
-        return []
-
-
 # --- HTML Generation ---
-def render_email_item(email_info, cat_info, show_done_check=False, show_trash_btn=False, show_delete_check=False):
-    """Render a single email as HTML."""
-    tid = html_module.escape(email_info["thread_id"])
-    sender = html_module.escape(email_info["sender"])
-    subject = html_module.escape(email_info["subject"][:80])
-    summary = html_module.escape(cat_info.get("sum", email_info["snippet"][:100]))
-    date = html_module.escape(email_info["date"])
-    urgency = cat_info.get("urg", "info")
-    tag = cat_info.get("tag")
+def escape(text):
+    """HTML-escape text."""
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
-    parts = []
-    parts.append('<div class="email-item">')
+
+def render_email_item(email, summary, urgency, tag, show_done_check=False, show_trash_btn=False, show_delete_check=False):
+    """Render a single email as HTML."""
+    tid = escape(email["thread_id"])
+    sender = escape(email["sender"])
+    subject = escape(email["subject"][:80])
+    summary_text = escape(summary)
+    date = escape(email["date"])
+
+    parts = ['<div class="email-item">']
 
     if show_done_check:
         parts.append(f'    <input type="checkbox" class="done-check" data-thread-id="{tid}" onchange="handleDoneCheck(this)">')
@@ -332,16 +375,17 @@ def render_email_item(email_info, cat_info, show_done_check=False, show_trash_bt
     parts.append('    <div class="email-content">')
     parts.append('        <div class="email-top">')
     parts.append(f'            <span class="email-sender">{sender}</span>')
-    parts.append(f'            <span class="email-date">')
+    parts.append('            <span class="email-date">')
     if show_trash_btn:
-        parts.append(f'                <button class="trash-btn" onclick="trashSingleEmail(this, \'{tid}\')" title="Move to trash">&#128465;</button>')
+        parts.append(f"                <button class=\"trash-btn\" onclick=\"trashSingleEmail(this, '{tid}')\" title=\"Move to trash\">&#128465;</button>")
     parts.append(f'                {date}')
-    parts.append(f'            </span>')
+    parts.append('            </span>')
     parts.append('        </div>')
     parts.append(f'        <div class="email-subject">{subject}</div>')
-    parts.append(f'        <div class="email-summary">{summary}</div>')
+    parts.append(f'        <div class="email-summary">{summary_text}</div>')
     if tag:
-        tag_class = {"PAY": "deadline", "REVIEW": "review", "RESPOND": "respond", "SIGN": "deadline", "SAVE": "review", "FYI": "fyi"}.get(tag, "fyi")
+        tag_class = {"PAY": "deadline", "REVIEW": "review", "RESPOND": "respond",
+                     "SIGN": "deadline", "SAVE": "review", "FYI": "fyi"}.get(tag, "fyi")
         parts.append(f'        <span class="email-action-tag {tag_class}">{tag}</span>')
     parts.append('    </div>')
     parts.append('</div>')
@@ -349,12 +393,8 @@ def render_email_item(email_info, cat_info, show_done_check=False, show_trash_bt
     return "\n".join(parts)
 
 
-def generate_dashboard(all_emails, categorization_results):
+def generate_dashboard(categorized_emails):
     """Generate the full HTML dashboard."""
-    # Build lookup: thread_id -> categorization
-    cat_lookup = {r["id"]: r for r in categorization_results}
-
-    # Sort emails into sections
     sections = {
         "important": [],
         "followup": [],
@@ -365,26 +405,26 @@ def generate_dashboard(all_emails, categorization_results):
         "deletion": [],
     }
 
-    for tid, email in all_emails.items():
-        cat = cat_lookup.get(tid, {})
-        category = cat.get("cat", "skip")
-        if category in sections:
-            sections[category].append((email, cat))
+    for email, cat, summary, urgency, tag in categorized_emails:
+        if cat in sections:
+            sections[cat].append((email, summary, urgency, tag))
 
     # Read template
     with open(TEMPLATE_PATH) as f:
         template = f.read()
 
-    # Generate HTML for each section
     def render_section(items, done_check=False, trash_btn=False, delete_check=False):
         if not items:
             return '<div class="empty-state">Nothing here right now.</div>'
         return "\n".join(
-            render_email_item(email, cat, show_done_check=done_check, show_trash_btn=trash_btn, show_delete_check=delete_check)
-            for email, cat in items
+            render_email_item(email, summary, urgency, tag,
+                            show_done_check=done_check, show_trash_btn=trash_btn,
+                            show_delete_check=delete_check)
+            for email, summary, urgency, tag in items
         )
 
     now = datetime.now().strftime("%b %d, %Y %I:%M %p")
+    school_count = len(sections["school_ella"]) + len(sections["school_emmie"]) + len(sections["school_general"])
 
     replacements = {
         "{{LAST_UPDATED}}": now,
@@ -392,7 +432,7 @@ def generate_dashboard(all_emails, categorization_results):
         "{{IMPORTANT_ITEMS}}": render_section(sections["important"], done_check=True, trash_btn=True),
         "{{FOLLOWUP_COUNT}}": str(len(sections["followup"])),
         "{{FOLLOWUP_ITEMS}}": render_section(sections["followup"], done_check=True, trash_btn=True),
-        "{{SCHOOL_COUNT}}": str(len(sections["school_ella"]) + len(sections["school_emmie"]) + len(sections["school_general"])),
+        "{{SCHOOL_COUNT}}": str(school_count),
         "{{SCHOOL_ELLA_ITEMS}}": render_section(sections["school_ella"]),
         "{{SCHOOL_EMMIE_ITEMS}}": render_section(sections["school_emmie"]),
         "{{SCHOOL_GENERAL_ITEMS}}": render_section(sections["school_general"]),
@@ -411,14 +451,14 @@ def generate_dashboard(all_emails, categorization_results):
 
 # --- Main ---
 def main():
-    print("=== Gmail Dashboard Refresh ===")
+    print("=== Gmail Dashboard Refresh (Rule-Based) ===")
     print(f"Time: {datetime.now().isoformat()}")
 
-    # Step 1: Set up Gmail service
+    # Step 1: Gmail service
     print("\n1. Connecting to Gmail API...")
     service = get_gmail_service()
 
-    # Step 2: Process pending deletions
+    # Step 2: Process deletions
     print("\n2. Checking for pending deletions...")
     trashed = process_deletions(service)
     clear_refresh_marker()
@@ -427,34 +467,26 @@ def main():
     print("\n3. Fetching emails...")
     all_emails = fetch_all_emails(service)
 
-    if not all_emails:
-        print("No emails found. Generating empty dashboard.")
-        categorization_results = []
-    else:
-        # Step 4: Auto-categorize obvious emails
-        print("\n4. Auto-categorizing...")
-        needs_ai, auto_results = auto_categorize(all_emails)
-        print(f"  Auto-categorized: {len(auto_results)}, needs AI: {len(needs_ai)}")
+    # Step 4: Categorize
+    print("\n4. Categorizing emails...")
+    categorized = []
+    cat_counts = {}
 
-        # Step 5: AI categorization
-        print("\n5. AI categorization...")
-        ai_results = categorize_with_claude(needs_ai)
-        categorization_results = auto_results + ai_results
+    for tid, (email, source) in all_emails.items():
+        cat, summary, urgency, tag = categorize_email(email, source)
+        if cat != "skip":
+            categorized.append((email, cat, summary, urgency, tag))
+        cat_counts[cat] = cat_counts.get(cat, 0) + 1
 
-    # Step 6: Generate HTML
-    print("\n6. Generating dashboard HTML...")
-    dashboard_html = generate_dashboard(all_emails, categorization_results)
+    # Step 5: Generate HTML
+    print("\n5. Generating dashboard HTML...")
+    html = generate_dashboard(categorized)
 
     with open(OUTPUT_PATH, "w") as f:
-        f.write(dashboard_html)
+        f.write(html)
     print(f"  Saved to {OUTPUT_PATH}")
 
     # Summary
-    cat_counts = {}
-    for r in categorization_results:
-        cat = r.get("cat", "skip")
-        cat_counts[cat] = cat_counts.get(cat, 0) + 1
-
     print("\n=== Summary ===")
     if trashed:
         print(f"Trashed: {trashed} emails")
