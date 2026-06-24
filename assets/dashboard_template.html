@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Dashboard</title>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #1a1a2e;
+            --muted: #6c757d;
+            --border: #e9ecef;
+            --urgent: #dc3545;
+            --action: #fd7e14;
+            --info: #0d6efd;
+            --success: #198754;
+            --school: #6f42c1;
+            --promo: #20c997;
+            --delete: #adb5bd;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        header h1 { font-size: 1.5rem; font-weight: 700; }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+
+        .refresh-btn {
+            background: var(--info);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .refresh-btn:hover { opacity: 0.9; }
+        .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .auto-schedule {
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            max-width: 90vw;
+            text-align: center;
+        }
+        .toast.show { opacity: 1; }
+
+        /* Setup banner */
+        .setup-banner {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .setup-banner input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.3rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+        .setup-banner button {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .section {
+            background: var(--card);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 1.15rem;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header:hover { background: var(--bg); }
+
+        .section-title {
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title .icon { font-size: 1.15rem; }
+
+        .badge {
+            background: var(--muted);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .badge.urgent { background: var(--urgent); }
+        .badge.action { background: var(--action); }
+        .badge.school { background: var(--school); }
+        .badge.promo { background: var(--promo); }
+
+        .section-body { padding: 0; }
+        .section.collapsed .section-body { display: none; }
+        .section.collapsed .section-header { border-bottom: none; }
+
+        .chevron {
+            transition: transform 0.2s;
+            color: var(--muted);
+        }
+        .section.collapsed .chevron { transform: rotate(-90deg); }
+
+        .subsection-label {
+            padding: 0.5rem 1.15rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .email-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 1.15rem;
+            border-bottom: 1px solid var(--border);
+            transition: opacity 0.3s, background 0.3s;
+        }
+
+        .email-item:last-child { border-bottom: none; }
+
+        .email-item.done {
+            opacity: 0.35;
+            background: #f0f0f0;
+        }
+
+        .email-item.done .email-subject { text-decoration: line-through; }
+
+        .email-item.queued-delete {
+            opacity: 0.3;
+            background: #fef2f2;
+        }
+
+        .done-check {
+            margin-top: 0.35rem;
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .urgency-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-top: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .urgency-dot.urgent { background: var(--urgent); }
+        .urgency-dot.action { background: var(--action); }
+        .urgency-dot.info { background: var(--info); }
+        .urgency-dot.low { background: var(--delete); }
+
+        .email-content { flex: 1; min-width: 0; }
+
+        .email-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .email-sender {
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .email-date {
+            font-size: 0.75rem;
+            color: var(--muted);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .email-subject {
+            font-size: 0.85rem;
+            color: var(--text);
+            margin-top: 0.1rem;
+        }
+
+        .email-summary {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.2rem;
+        }
+
+        .email-action-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .email-action-tag.respond { background: #fff3cd; color: #856404; }
+        .email-action-tag.review { background: #cfe2ff; color: #084298; }
+        .email-action-tag.deadline { background: #f8d7da; color: #842029; }
+        .email-action-tag.fyi { background: #e2e3e5; color: #41464b; }
+
+        /* Trash icon button */
+        .trash-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.4;
+            padding: 0.1rem;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+        .trash-btn:hover { opacity: 1; }
+
+        /* Deletion section */
+        .delete-controls {
+            padding: 0.5rem 1.15rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .delete-controls label {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+        }
+
+        .delete-controls button {
+            margin-left: auto;
+            background: var(--urgent);
+            color: white;
+            border: none;
+            padding: 0.35rem 0.75rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .delete-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .empty-state {
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 0.75rem; }
+            header h1 { font-size: 1.25rem; }
+            .email-item { padding: 0.6rem 0.85rem; }
+            .setup-banner { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast for notifications -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Setup banner (shown only if no token saved) -->
+    <div class="setup-banner" id="setup-banner" style="display:none;">
+        &#128273; To enable Refresh &amp; Delete from this page, enter your GitHub token:
+        <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxx">
+        <button onclick="saveToken()">Save</button>
+        <div style="width:100%;font-size:0.75rem;color:var(--muted);margin-top:0.25rem;">
+            Fine-grained PAT with Contents read/write on Idojosef/email-dashboard.
+            <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">Create one here</a>
+        </div>
+    </div>
+
+    <header>
+        <h1>Email Dashboard</h1>
+        <div class="header-right">
+            <div class="header-meta">
+                <span>Last updated: <strong>{{LAST_UPDATED}}</strong></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+                <button class="refresh-btn" id="refresh-btn" onclick="requestRefresh()">
+                    &#x21bb; Refresh
+                </button>
+                <span class="auto-schedule">Also auto-refreshes 3x daily</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: Important (New & Unread) -->
+    <div class="section" id="section-important">
+        <div class="section-header" onclick="toggleSection('section-important')">
+            <span class="section-title">
+                <span class="icon">&#9888;&#65039;</span>
+                Important &amp; New
+                <span class="badge urgent">{{IMPORTANT_COUNT}}</span>
+            </span>
+            <span class="chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+            {{IMPORTANT_ITEMS}}
+        </div>
+    </div>
+
+    <!-- SECTION 1b: Follow-Up Needed -->
+    <div class="section" id="section-followup">
+        <div class="section-header" onclick="toggleSection('section-followup')">
+            <span class="section-title">
+                <span class="icon">&#128260;</span>
+                Follow-Up Needed
+                <span class="badge action">{{FOLLOWUP_COUNT}}</span>
+            </span>
+            <span class="chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+            {{FOLLOWUP_ITEMS}}
+        </div>
+    </div>
+
+    <!-- SECTION 2: School Updates -->
+    <div class="section" id="section-school">
+        <div class="section-header" onclick="toggleSection('section-school')">
+            <span class="section-title">
+                <span class="icon">&#127979;</span>
+                School Updates
+                <span class="badge school">{{SCHOOL_COUNT}}</span>
+            </span>
+            <span class="chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+            <div class="subsection-label">Ella (4th Grade)</div>
+            {{SCHOOL_ELLA_ITEMS}}
+            <div class="subsection-label">Emmie (1st Grade)</div>
+            {{SCHOOL_EMMIE_ITEMS}}
+            <div class="subsection-label">General / District</div>
+            {{SCHOOL_GENERAL_ITEMS}}
+        </div>
+    </div>
+
+    <!-- SECTION 3: Interesting Promotions & Social -->
+    <div class="section" id="section-promos">
+        <div class="section-header" onclick="toggleSection('section-promos')">
+            <span class="section-title">
+                <span class="icon">&#127873;</span>
+                Interesting Promotions &amp; Social
+                <span class="badge promo">{{PROMOS_COUNT}}</span>
+            </span>
+            <span class="chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+            {{PROMO_ITEMS}}
+        </div>
+    </div>
+
+    <!-- SECTION 4: Suggested for Deletion -->
+    <div class="section" id="section-delete">
+        <div class="section-header" onclick="toggleSection('section-delete')">
+            <span class="section-title">
+                <span class="icon">&#128465;&#65039;</span>
+                Suggested for Deletion
+                <span class="badge">{{DELETE_COUNT}}</span>
+            </span>
+            <span class="chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+            <div class="delete-controls">
+                <label><input type="checkbox" id="select-all" onchange="toggleAll(this)"> Select all</label>
+                <button id="trash-btn-main" onclick="moveSelectedToTrash()">Move selected to trash</button>
+            </div>
+            {{DELETE_ITEMS}}
+        </div>
+    </div>
+
+    <script>
+        const REPO_OWNER = 'Idojosef';
+        const REPO_NAME = 'email-dashboard';
+        const DONE_KEY = 'email-dashboard-done';
+        const TOKEN_KEY = 'email-dashboard-gh-token';
+
+        // ========== Token Management ==========
+        function getToken() {
+            return localStorage.getItem(TOKEN_KEY);
+        }
+
+        function saveToken() {
+            const val = document.getElementById('token-input').value.trim();
+            if (val) {
+                localStorage.setItem(TOKEN_KEY, val);
+                document.getElementById('setup-banner').style.display = 'none';
+                showToast('Token saved! Refresh and Delete are now enabled.');
+            }
+        }
+
+        function checkSetup() {
+            if (!getToken()) {
+                document.getElementById('setup-banner').style.display = 'flex';
+            }
+        }
+
+        // ========== GitHub API Helpers ==========
+        async function githubAPI(path, method, body) {
+            const token = getToken();
+            if (!token) {
+                document.getElementById('setup-banner').style.display = 'flex';
+                showToast('Please add your GitHub token first.');
+                return null;
+            }
+            const resp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/${path}`, {
+                method,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/vnd.github+json',
+                    'Content-Type': 'application/json'
+                },
+                body: body ? JSON.stringify(body) : undefined
+            });
+            if (!resp.ok) {
+                const err = await resp.text();
+                console.error('GitHub API error:', resp.status, err);
+                if (resp.status === 401) {
+                    showToast('GitHub token is invalid or expired. Please update it.');
+                    document.getElementById('setup-banner').style.display = 'flex';
+                }
+                return null;
+            }
+            return resp.status === 204 ? {} : resp.json();
+        }
+
+        async function writeFileToRepo(path, content, message) {
+            // Check if file exists first (to get SHA for update)
+            let sha = null;
+            const existing = await githubAPI(`contents/${path}`, 'GET');
+            if (existing && existing.sha) sha = existing.sha;
+
+            const body = {
+                message,
+                content: btoa(unescape(encodeURIComponent(content)))
+            };
+            if (sha) body.sha = sha;
+
+            return githubAPI(`contents/${path}`, 'PUT', body);
+        }
+
+        async function deleteFileFromRepo(path, message) {
+            const existing = await githubAPI(`contents/${path}`, 'GET');
+            if (existing && existing.sha) {
+                return githubAPI(`contents/${path}`, 'DELETE', {
+                    message,
+                    sha: existing.sha
+                });
+            }
+        }
+
+        // ========== Refresh ==========
+        async function requestRefresh() {
+            const btn = document.getElementById('refresh-btn');
+            btn.disabled = true;
+            btn.innerHTML = '&#8987; Requesting...';
+
+            const command = JSON.stringify({
+                action: 'refresh',
+                requested_at: new Date().toISOString()
+            });
+
+            const result = await writeFileToRepo(
+                'commands/refresh.json',
+                command,
+                'Refresh requested from dashboard'
+            );
+
+            if (result) {
+                btn.innerHTML = '&#9989; Refresh Queued';
+                showToast('Refresh requested! Dashboard will update within 15 minutes.');
+                // Also clear done state since user wants fresh view
+                localStorage.removeItem(DONE_KEY);
+            } else {
+                btn.innerHTML = '&#x21bb; Refresh';
+                btn.disabled = false;
+            }
+
+            setTimeout(() => {
+                btn.innerHTML = '&#x21bb; Refresh';
+                btn.disabled = false;
+            }, 30000);
+        }
+
+        // ========== Done Checkboxes ==========
+        function getDoneState() {
+            try { return JSON.parse(localStorage.getItem(DONE_KEY) || '{}'); }
+            catch { return {}; }
+        }
+
+        function saveDoneState(state) {
+            localStorage.setItem(DONE_KEY, JSON.stringify(state));
+        }
+
+        function restoreState() {
+            const state = getDoneState();
+            document.querySelectorAll('.done-check').forEach(cb => {
+                const id = cb.dataset.threadId;
+                if (id && state[id]) {
+                    cb.checked = true;
+                    cb.closest('.email-item').classList.add('done');
+                }
+            });
+            updateDoneCounts();
+        }
+
+        function handleDoneCheck(cb) {
+            const id = cb.dataset.threadId;
+            const item = cb.closest('.email-item');
+            const state = getDoneState();
+            if (cb.checked) {
+                state[id] = Date.now();
+                item.classList.add('done');
+            } else {
+                delete state[id];
+                item.classList.remove('done');
+            }
+            saveDoneState(state);
+            updateDoneCounts();
+        }
+
+        function updateDoneCounts() {
+            ['section-important', 'section-followup'].forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (!section) return;
+                const total = section.querySelectorAll('.done-check').length;
+                const done = section.querySelectorAll('.done-check:checked').length;
+                const badge = section.querySelector('.badge');
+                if (badge && total > 0) {
+                    badge.textContent = done > 0 ? `${total - done} / ${total}` : total;
+                }
+            });
+        }
+
+        // ========== Trash / Delete ==========
+        function trashSingleEmail(btn, threadId) {
+            const item = btn.closest('.email-item');
+            item.classList.add('queued-delete');
+            queueDeletion([threadId]);
+        }
+
+        function toggleAll(master) {
+            document.querySelectorAll('#section-delete .delete-check').forEach(cb => {
+                cb.checked = master.checked;
+            });
+        }
+
+        async function moveSelectedToTrash() {
+            const checked = document.querySelectorAll('#section-delete .delete-check:checked');
+            if (checked.length === 0) {
+                showToast('No emails selected.');
+                return;
+            }
+
+            const btn = document.getElementById('trash-btn-main');
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+
+            const ids = Array.from(checked).map(cb => cb.dataset.threadId);
+            const success = await queueDeletion(ids);
+
+            if (success) {
+                // Visually remove the items
+                checked.forEach(cb => {
+                    const item = cb.closest('.email-item');
+                    item.classList.add('queued-delete');
+                });
+                document.getElementById('select-all').checked = false;
+                showToast(`${ids.length} email(s) queued for deletion. They'll be trashed within 15 minutes.`);
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Move selected to trash';
+        }
+
+        async function queueDeletion(threadIds) {
+            // Read existing pending deletions
+            let pending = [];
+            const existing = await githubAPI('contents/commands/delete.json', 'GET');
+            if (existing && existing.content) {
+                try {
+                    pending = JSON.parse(decodeURIComponent(escape(atob(existing.content.replace(/\n/g, '')))));
+                } catch(e) { pending = []; }
+            }
+
+            // Merge new IDs (deduplicate)
+            const allIds = [...new Set([...pending, ...threadIds])];
+
+            const result = await writeFileToRepo(
+                'commands/delete.json',
+                JSON.stringify(allIds, null, 2),
+                `Queue ${threadIds.length} email(s) for deletion`
+            );
+
+            if (result) {
+                showToast(`${threadIds.length} email(s) queued for deletion.`);
+                return true;
+            }
+            return false;
+        }
+
+        // ========== UI Helpers ==========
+        function toggleSection(id) {
+            document.getElementById(id).classList.toggle('collapsed');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function cleanupOldState() {
+            const state = getDoneState();
+            const cutoff = Date.now() - (60 * 24 * 60 * 60 * 1000);
+            let changed = false;
+            for (const [id, ts] of Object.entries(state)) {
+                if (ts < cutoff) { delete state[id]; changed = true; }
+            }
+            if (changed) saveDoneState(state);
+        }
+
+        // ========== Init ==========
+        checkSetup();
+        cleanupOldState();
+        restoreState();
+    </script>
+</body>
+</html>
