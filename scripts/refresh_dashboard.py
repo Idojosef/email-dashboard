@@ -6,8 +6,11 @@ Runs in GitHub Actions or locally. No AI API needed."""
 import os
 import json
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
+
+# Pacific time (UTC-7 PDT / UTC-8 PST)
+PT = timezone(timedelta(hours=-7))
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -423,7 +426,7 @@ def generate_dashboard(categorized_emails):
             for email, summary, urgency, tag in items
         )
 
-    now = datetime.now().strftime("%b %d, %Y %I:%M %p")
+    now = datetime.now(PT).strftime("%b %d, %Y %I:%M %p PT")
     school_count = len(sections["school_ella"]) + len(sections["school_emmie"]) + len(sections["school_general"])
 
     replacements = {
