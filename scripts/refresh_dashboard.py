@@ -60,6 +60,30 @@ LINKEDIN_BAD = ["puzzle", "game", "who viewed", "skill assessment", "newsletter"
 PROMO_SKIP_SENDERS = ["expedia", "hotels.com", "booking.com", "trivago",
                        "groupon", "wish.com", "temu", "shein"]
 
+# Senders that should NEVER appear in Important — route to deletion or skip
+NOISE_SENDERS = [
+    "paloaltojuniormuseum", "jmof.org", "junior museum",  # museum newsletters
+    "interactivebrokers", "ibkr",  # brokerage notifications
+    "noreply@youtube", "no-reply@youtube",  # youtube notifications
+    "facebookmail", "notification@facebook",  # facebook notifications
+    "noreply@instagram",  # instagram
+    "noreply@medium.com",  # medium
+    "info@meetup.com", "noreply@meetup.com",  # meetup
+    "noreply@quora.com",  # quora
+    "noreply@reddit.com",  # reddit
+    "noreply@nextdoor.com",  # nextdoor
+    "peacocktv", "hulu", "paramountplus",  # streaming promos
+]
+
+# Subjects/snippets that indicate stale shipping/order notifications — route to deletion
+STALE_ORDER_PATTERNS = [
+    "has been delivered", "was delivered", "order delivered",
+    "has shipped", "order shipped", "shipping confirmation",
+    "out for delivery", "your order has been",
+    "tracking number", "shipment notification",
+    "your package", "delivery complete",
+]
+
 # Peachjar - always route to deletion
 PEACHJAR_SUBJECTS = ["new school and community flyers", "new flyers", "new school flyer",
                      "community flyers for your child"]
@@ -229,6 +253,14 @@ def categorize_email(email, source):
 
     # Generic travel promos
     if matches_any(sender_lower, PROMO_SKIP_SENDERS):
+        return "deletion", snippet[:80], "low", None
+
+    # Noise senders — newsletters, brokerages, museums, social media
+    if matches_any(sender_lower, NOISE_SENDERS):
+        return "deletion", snippet[:80], "low", None
+
+    # Stale shipping/order notifications — already delivered or shipped
+    if matches_any(text, STALE_ORDER_PATTERNS):
         return "deletion", snippet[:80], "low", None
 
     # --- School ---
