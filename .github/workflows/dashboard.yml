@@ -56,7 +56,8 @@ jobs:
           git add index.html
 
           # Remove processed command files
-          git rm -f commands/delete.json commands/refresh.json 2>/dev/null || true
+          git rm -f commands/refresh.json 2>/dev/null || true
+          git rm -f commands/delete.json 2>/dev/null || true
 
           # Commit (skip if nothing changed)
           git diff --cached --quiet || git commit -m "Dashboard refresh - $(date -u '+%Y-%m-%d %H:%M UTC')"
