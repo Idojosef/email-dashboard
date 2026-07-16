@@ -566,19 +566,56 @@
             );
 
             if (result) {
-                btn.innerHTML = '&#9989; Refresh Queued';
-                showToast('Refresh requested! Dashboard will update within 15 minutes.');
-                // Also clear done state since user wants fresh view
+                btn.innerHTML = '&#8987; Refreshing...';
+                showToast('Refresh started — page will reload when ready.');
                 localStorage.removeItem(DONE_KEY);
+                pollForRefresh();
             } else {
                 btn.innerHTML = '&#x21bb; Refresh';
                 btn.disabled = false;
             }
+        }
 
-            setTimeout(() => {
-                btn.innerHTML = '&#x21bb; Refresh';
-                btn.disabled = false;
-            }, 30000);
+        async function pollForRefresh() {
+            const btn = document.getElementById('refresh-btn');
+            const startTime = Date.now();
+            const maxWait = 5 * 60 * 1000;
+            const interval = 10 * 1000;
+            let dots = 0;
+
+            const timer = setInterval(async () => {
+                dots = (dots + 1) % 4;
+                btn.innerHTML = '&#8987; Refreshing' + '.'.repeat(dots);
+
+                if (Date.now() - startTime > maxWait) {
+                    clearInterval(timer);
+                    btn.innerHTML = '&#x21bb; Refresh';
+                    btn.disabled = false;
+                    showToast('Refresh timed out. Try reloading the page manually.');
+                    return;
+                }
+
+                try {
+                    const runs = await githubAPI(
+                        'actions/runs?per_page=5&event=push', 'GET'
+                    );
+                    if (!runs || !runs.workflow_runs) return;
+
+                    const dashRun = runs.workflow_runs.find(r =>
+                        r.display_title === 'Refresh requested from dashboard' &&
+                        new Date(r.created_at).getTime() > startTime - 30000
+                    );
+
+                    if (dashRun && dashRun.status === 'completed') {
+                        clearInterval(timer);
+                        btn.innerHTML = '&#9989; Done! Reloading...';
+                        showToast('Refresh complete — reloading now.');
+                        setTimeout(() => location.reload(), 2000);
+                    }
+                } catch (e) {
+                    console.error('Poll error:', e);
+                }
+            }, interval);
         }
 
         // ========== Done Checkboxes ==========
